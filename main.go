@@ -1,12 +1,28 @@
 package main
 
-import "os"
+import (
+	"net"
+	"os"
+)
 
 func main() {
 	switch len(os.Args) {
 	case 1: // no argument provided
-		usage()
+		// usage()
 	}
+	port := ":1111"
+	ln, err := net.Listen("tcp", port)
+	if err != nil {
+		// handle error
+		println("Error listening on ", port)
+	}
+	println("Listening on", port)
+	conn, err := ln.Accept()
+	if err != nil {
+		// handle error
+		println("Error accepting connection ...")
+	}
+	println("Do nothing with connection at RAM address", conn)
 }
 
 func usage() {
