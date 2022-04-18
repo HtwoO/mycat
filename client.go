@@ -1,20 +1,23 @@
 package main
 
-import "net"
+import (
+	"fmt"
+	"net"
+)
 
 func main() {
 	srv := "localhost:1111"
 	conn, err := net.Dial("tcp", srv)
 	if err != nil {
 		// handle error
-		println("Error connecting to", srv)
+		fmt.Printf("Error connecting to %s\n", srv)
 	} else {
-		println("Connected to", srv)
+		fmt.Printf("Connected to %s\n", srv)
 	}
 	err = conn.Close()
 	if err != nil {
-		println("Error disconnecting to", srv)
+		fmt.Printf("Error disconnecting to %s\n", srv)
 	} else {
-		println("Connection to", srv, "closed")
+		fmt.Printf("Connection to %s closed\n", srv)
 	}
 }

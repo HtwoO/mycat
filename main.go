@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net"
 	"os"
 )
@@ -14,20 +15,19 @@ func main() {
 	ln, err := net.Listen("tcp", port)
 	if err != nil {
 		// handle error
-		println("Error listening on ", port)
+		fmt.Printf("Error listening on %s\n", port)
 	}
-	println("Listening on", port)
+	fmt.Printf("Listening on %s\n", port)
 	for {
-		println("Waiting for connection at", port)
 		conn, err := ln.Accept()
 		if err != nil {
 			// handle error
-			println("Error accepting connection ...")
+			fmt.Println("Error accepting connection ...")
 		}
-		println("Do nothing with connection at RAM address", conn)
+		fmt.Printf("Connection received from: %s\n", conn.RemoteAddr())
 	}
 }
 
 func usage() {
-	println(os.Args[0], "Usage 使用说明")
+	fmt.Printf("%s, Usage 使用说明\n", os.Args[0])
 }
