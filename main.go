@@ -17,12 +17,15 @@ func main() {
 		println("Error listening on ", port)
 	}
 	println("Listening on", port)
-	conn, err := ln.Accept()
-	if err != nil {
-		// handle error
-		println("Error accepting connection ...")
+	for {
+		println("Waiting for connection at", port)
+		conn, err := ln.Accept()
+		if err != nil {
+			// handle error
+			println("Error accepting connection ...")
+		}
+		println("Do nothing with connection at RAM address", conn)
 	}
-	println("Do nothing with connection at RAM address", conn)
 }
 
 func usage() {
