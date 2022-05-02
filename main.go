@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"net"
 	"os"
 )
@@ -9,7 +10,7 @@ import (
 func main() {
 	switch len(os.Args) {
 	case 1: // no argument provided
-		// usage()
+		usage()
 	}
 	port := ":1111"
 	ln, err := net.Listen("tcp", port)
@@ -25,6 +26,12 @@ func main() {
 			fmt.Println("Error accepting connection ...")
 		}
 		fmt.Printf("Connection received from: %s\n", conn.RemoteAddr())
+		go func(c net.Conn) {
+			// Echo all incoming data
+			io.Copy(c, c)
+			// Shut down the connection
+			c.Close()
+		}(conn)
 	}
 }
 
