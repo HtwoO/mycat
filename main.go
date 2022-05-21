@@ -26,11 +26,15 @@ func main() {
 			fmt.Println("Error accepting connection ...")
 		}
 		fmt.Printf("Connection received from: %s\n", conn.RemoteAddr())
-		go func(c net.Conn) {
-			// Echo all incoming data
-			io.Copy(c, c)
+		go func(conn net.Conn) {
+			// Write incoming data to os.Stdout
+			if _, err = io.Copy(os.Stdout, conn); err != nil {
+				fmt.Fprintln(os.Stderr, err)
+			}
 			// Shut down the connection
-			c.Close()
+			fmt.Printf("Closing connection: %T\n", conn)
+			conn.Close()
+			fmt.Printf("Connection closed: %q\n", conn)
 		}(conn)
 	}
 }
