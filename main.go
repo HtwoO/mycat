@@ -15,15 +15,13 @@ func main() {
 	port := ":1111"
 	ln, err := net.Listen("tcp", port)
 	if err != nil {
-		// handle error
-		fmt.Printf("Error listening on %s\n", port)
+		fmt.Fprintln(os.Stderr, err)
 	}
 	fmt.Printf("Listening on %s\n", port)
 	for {
 		conn, err := ln.Accept()
 		if err != nil {
-			// handle error
-			fmt.Println("Error accepting connection ...")
+			fmt.Fprintln(os.Stderr, err)
 		}
 		defer func() {
 			// Shut down the connection
